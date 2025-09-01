@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "048697d3-f4c1-4ee2-ab94-b7c3d9ce3cd0",
+		"name": "mytest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "1453931",
+		"_collection_link": "https://red-firefly-245852.postman.co/workspace/demo-kafka~abdf0a6b-2e0c-47bb-8200-c087efca8105/collection/1453931-048697d3-f4c1-4ee2-ab94-b7c3d9ce3cd0?action=share&source=collection_link&creator=1453931"
+	},
+	"item": [
+		{
+			"name": "Get user by id with success case",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test(\"Response matches JSON schema\", function () {",
+							"    const schema = {",
+							"        type: \"object\",",
+							"        properties: {",
+							"            id: { type: \"integer\" },",
+							"            name: { type: \"string\" },",
+							"            username: { type: \"string\" },",
+							"            email: { type: \"string\" },",
+							"            address: {",
+							"                type: \"object\",",
+							"                properties: {",
+							"                    street: { type: \"string\" },",
+							"                    suite: { type: \"string\" },",
+							"                    city: { type: \"string\" },",
+							"                    zipcode: { type: \"string\" },",
+							"                    geo: {",
+							"                        type: \"object\",",
+							"                        properties: {",
+							"                            lat: { type: \"string\" },",
+							"                            lng: { type: \"string\" }",
+							"                        },",
+							"                        required: [\"lat\", \"lng\"]",
+							"                    }",
+							"                },",
+							"                required: [\"street\", \"suite\", \"city\", \"zipcode\", \"geo\"]",
+							"            },",
+							"            phone: { type: \"string\" },",
+							"            website: { type: \"string\" },",
+							"            company: {",
+							"                type: \"object\",",
+							"                properties: {",
+							"                    name: { type: \"string\" },",
+							"                    catchPhrase: { type: \"string\" },",
+							"                    bs: { type: \"string\" }",
+							"                },",
+							"                required: [\"name\", \"catchPhrase\", \"bs\"]",
+							"            }",
+							"        },",
+							"        required: [\"id\", \"name\", \"username\", \"email\", \"address\", \"phone\", \"website\", \"company\"]",
+							"    };",
+							"",
+							"    const validate = require('ajv')().compile(schema);",
+							"    const valid = validate(response);",
+							"    pm.expect(valid, validate.errors).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "https://jsonplaceholder.typicode.com/users/1"
+			},
+			"response": []
+		}
+	]
+}
